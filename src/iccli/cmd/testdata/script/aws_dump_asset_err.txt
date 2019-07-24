@@ -1,0 +1,16 @@
+# it should fail if used asset not declared in manifest
+
+! ic aws --s3-bucket exp dump foo
+stderr 'asset used but not declared'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- index.ic --
+from . import assets
+
+@resource
+def brick():
+  print(assets["brick.yaml"])

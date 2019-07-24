@@ -1,0 +1,10 @@
+# it should fail if given a version
+
+! ic update --remove org.com v1.0.0
+stderr 'extra arg'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick

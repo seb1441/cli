@@ -1,0 +1,9 @@
+# it should create a new dir and init
+
+stdin '\n\n\n\n'
+ic new foo.bar
+exists bar/brick.yaml
+exists bar/index.ic
+cd bar
+ic aws tree
+stdout 'brick'

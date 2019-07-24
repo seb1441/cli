@@ -1,0 +1,12 @@
+# it should display tree of the requested remote brick version
+
+ic aws tree realorg.realcom.other.custom:mine v1.0.0 --json
+stdout '\{"id":\ "4vv3llgh",\ "name":\ "brick",\ "children":\ \[\{"id":\ "t3rkh3ov",\ "name":\ "exp",\ "type":\ "aws\.cloudformation\.wait_condition_handle"\}\]\}'
+diff brick.yaml.ref .ic/index/realorg/realcom/v1.0.0/brick.yaml
+
+-- brick.yaml.ref --
+require: {}
+name: realorg.realcom
+version: v1.0.0
+private: true
+main: .submodule:brick

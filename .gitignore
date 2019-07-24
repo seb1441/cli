@@ -1,0 +1,10 @@
+.coverage
+.eggs
+.mypy_cache
+.pytest_cache
+.vscode/.ropeproject
+*.egg-info
+__pycache__
+build
+htmlcov
+dist

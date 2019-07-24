@@ -1,0 +1,27 @@
+# it should setup the cli by deploying a stack and updating config
+
+env AWS_DEFAULT_REGION=''
+stdin 'y\n'
+ic --profile test_setup aws --region us-east-1 setup test_depl
+grep 'test_setup' .ic/config.ini
+grep 'aws_region = us-east-1' .ic/config.ini
+grep 'aws_s3_bucket = ' .ic/config.ini
+exec mv .ic/config.ini config.ref.ini
+ic --profile test_setup aws --region us-east-1 setup test_depl
+diff config.ref.ini .ic/config.ini
+ic --profile test_setup aws update ic_setup_test_depl --remove --yes > output.txt
+diff output.ref.txt output.txt
+
+-- output.ref.txt --
+Plan review
+
+✖ plan DELETE
+└── ic_setup_test_depl
+    └── ✖ artifacts_bucket DELETE aws.s3.bucket
+Plan accepted
+
+Plan summary
+
+✖ plan DELETE_COMPLETE
+└── ic_setup_test_depl
+    └── ✖ artifacts_bucket DELETE_SKIPPED aws.s3.bucket

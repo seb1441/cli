@@ -1,0 +1,17 @@
+-- brick.yaml --
+name: assorg.asscom
+version: v1.1.0
+private: true
+main: .submodule:brick
+assets:
+- "**/*.txt"
+-- submodule/index.ic --
+from ic import aws
+from . import assets
+@resource
+def brick():
+    return aws.cloudformation.wait_condition_handle(
+        assets["name.txt"].text.strip("\n")
+    )
+-- submodule/name.txt --
+awesome

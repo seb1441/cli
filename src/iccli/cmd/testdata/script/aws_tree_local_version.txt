@@ -1,0 +1,4 @@
+# it should fail if version given for a local brick
+
+! ic aws tree :brick v1.0.0
+stderr 'unexpected\ extra\ argument\ \(v1\.0\.0\)'

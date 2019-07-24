@@ -1,0 +1,30 @@
+# should work with remote replacement
+
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+exists .ic/cache/org/com/v1.0.0.json
+exists .ic/index/org/com/v1.0.0/brick.yaml
+exists .ic/cache/org2/com/v1.0.0.json
+exists .ic/index/org2/com/v1.0.0/brick.yaml
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+replace:
+  orgloc.comloc: org.com v1.0.0
+  orgloc.comlocv2: org2.com v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  orgloc.comloc: v0.0.0
+  orgloc.comlocv2: v2.0.0
+replace:
+  orgloc.comloc: org.com v1.0.0
+  orgloc.comlocv2: org2.com v1.0.0
+-- index.ic --
+from orgloc import comloc, comlocv2

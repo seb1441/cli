@@ -1,0 +1,14 @@
+# it should create a new profile with user defaults
+
+stdin 'profile\nregion\nbucket\nprefix\n'
+ic --profile exp config
+exists .ic/config.ini
+diff config.ini.ref .ic/config.ini
+
+-- config.ini.ref --
+[exp]
+aws_profile = profile
+aws_region = region
+aws_s3_bucket = bucket
+aws_s3_prefix = prefix
+

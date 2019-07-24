@@ -1,0 +1,6 @@
+# it should display tree of the cloud bricks
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_value --yes
+ic aws tree test_value
+stdout 'test_value aws.cloudformation.wait_condition_handle'
+ic aws update test_value --remove --yes

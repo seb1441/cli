@@ -1,0 +1,116 @@
+# it should fail if brick.yaml has an invalid format
+
+cd yaml
+! ic init
+stderr 'cannot parse'
+
+cd ../property
+! ic init
+stderr 'unknown properties'
+
+cd ../require
+! ic init
+stderr 'invalid require' 
+
+cd ../requires
+! ic init
+stderr 'invalid require'
+stderr 'malformed brick name'
+
+cd ../replace
+! ic init
+stderr 'invalid replace'
+
+cd ../replaces_key
+! ic init
+stderr 'invalid replace'
+stderr 'malformed brick name'
+
+cd ../replaces_value_type
+! ic init
+stderr 'invalid replace'
+stderr 'expected either'
+
+cd ../replaces_value
+! ic init
+stderr 'invalid replace'
+stderr 'mismatched brick name'
+
+cd ../exclude
+! ic init
+stderr 'invalid exclude'
+
+cd ../excludes
+! ic init
+stderr 'invalid exclude'
+stderr 'malformed brick name'
+
+cd ../assets
+! ic init
+stderr 'invalid assets'
+
+-- yaml/brick.yaml --
+[{
+
+}
+-- property/brick.yaml --
+dummy: 42
+-- require/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+require: dummy
+-- requires/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+require:
+  foo: bar
+-- replace/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+replace: dummy
+-- replaces_key/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+replace:
+  foo: bar
+-- replaces_value_type/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+replace:
+  baz.qux: 1
+-- replaces_value/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+replace:
+  baz.qux: com.org v2.0.0
+-- exclude/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+exclude: dummy
+-- excludes/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+exclude:
+  foo: bar
+-- assets/brick.yaml --
+name: foo.bar
+version: v1.0.0
+private: true
+main: :brick
+assets: dummy

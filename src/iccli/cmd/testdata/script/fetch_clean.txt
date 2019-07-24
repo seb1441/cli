@@ -1,0 +1,6 @@
+# it should remove created dirs only if empty
+
+exec mkdir -p .ic/cache/unknown/other
+! ic fetch unknown.dummy v1.0.0
+exists .ic/cache/unknown/other
+! exists .ic/cache/unknown/dummy

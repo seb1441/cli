@@ -1,0 +1,20 @@
+# it should store exact version of not specified nested bricks
+
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.nested: v1.0.0
+  org.noreq: v1.0.0
+-- index.ic --
+import org.noreq

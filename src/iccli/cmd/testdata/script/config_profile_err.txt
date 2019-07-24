@@ -1,0 +1,7 @@
+# it should fail if no profile and not config command
+
+! ic --profile dummy init
+stderr 'profile .* not found'
+
+! ic --profile dummy aws value
+stderr 'profile .* not found'

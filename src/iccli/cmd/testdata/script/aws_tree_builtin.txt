@@ -1,0 +1,6 @@
+# it should display tree of builtin cloud resources
+
+# needs AWS_DEFAULT_REGION
+
+ic aws tree ic.aws.cloudformation:wait_condition_handle
+stdout 'brick aws.cloudformation.wait_condition_handle'

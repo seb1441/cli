@@ -1,0 +1,15 @@
+# it should create a new brick.yaml file with defaults
+
+exec mkdir empty
+cd empty
+stdin 'foo.bar\n\n\n\n'
+ic init
+exists brick.yaml
+diff brick.yaml ../brick.yaml.ref
+exists index.ic
+
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+license: MIT
+main: :brick

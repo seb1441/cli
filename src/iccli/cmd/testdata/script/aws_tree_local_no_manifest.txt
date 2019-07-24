@@ -1,0 +1,4 @@
+# it should fail if no manifest
+
+! ic aws tree
+stderr 'brick.yaml not found'

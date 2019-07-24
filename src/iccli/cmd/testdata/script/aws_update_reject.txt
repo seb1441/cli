@@ -1,0 +1,31 @@
+# it should remove changest and stack (on create) if plan rejected
+
+stdin '\n'
+! ic aws update ic.aws.cloudformation:wait_condition_handle test_update_reject > output.txt
+diff output1.ref.txt output.txt
+! ic aws value test_update_reject
+stderr 'does not exist'
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update_reject --yes
+stdin 'N\n'
+! ic aws update ic.aws.iam:group test_update_reject > output.txt
+diff output2.ref.txt output.txt
+exec aws cloudformation list-change-sets --stack-name $(ic aws id test_update_reject) | jq ".Summaries"
+stdout '\[\]'
+ic aws update test_update_reject --remove --yes
+
+-- output1.ref.txt --
+Plan review
+
+✚ plan CREATE
+└── ✚ test_update_reject CREATE aws.cloudformation.wait_condition_handle
+
+Do you want to continue? [y/N]: Plan rejected
+-- output2.ref.txt --
+Plan review
+
+⬆ plan UPDATE
+├── ✖ test_update_reject DELETE aws.cloudformation.wait_condition_handle
+└── ✚ test_update_reject CREATE aws.iam.group
+
+Do you want to continue? [y/N]: Plan rejected

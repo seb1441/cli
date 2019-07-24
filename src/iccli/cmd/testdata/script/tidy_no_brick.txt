@@ -1,0 +1,12 @@
+# should fail if not found in remote
+
+! ic update --tidy
+stderr 'not found'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- index.ic --
+from unknown import dummy

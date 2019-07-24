@@ -1,0 +1,21 @@
+# it should not load python files
+
+! ic aws tree
+! stderr 'pymodule'
+stderr 'ImportError'
+stderr 'module'
+stderr 'icm'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- index.ic --
+from . import module
+
+@resource
+def brick():
+    ...
+-- module.py --
+print("pymodule")

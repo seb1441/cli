@@ -1,0 +1,19 @@
+# it should fail if bad name arg
+
+! ic aws dump foo realorg.realcom:brick v1.0.0
+stderr 'unexpected\ extra\ arguments\ \(realorg.realcom:brick,\ v1\.0\.0\)'
+
+! ic aws dump foo :brick
+stderr 'unexpected\ extra\ arguments\ \(:brick\)'
+
+! ic aws dump ic.aws.cloudformation:wait_condition_handle foo v1.0.0
+stderr 'unexpected\ extra\ argument\ \(v1\.0\.0\)'
+
+! ic aws dump
+stderr 'Missing argument "name"'
+
+! ic aws dump ic.aws.cloudformation:wait_condition_handle v1.0.0
+stderr 'Missing argument "name"'
+
+! ic aws dump :brick
+stderr 'Missing argument "name"'

@@ -1,0 +1,7 @@
+-- brick.yaml --
+name: org.noreq
+version: v1.0.0
+private: true
+main: :brick
+-- index.ic --
+from org import nested

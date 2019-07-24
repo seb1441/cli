@@ -1,0 +1,8 @@
+# it should erase existing artifacts if in inconsistent state 
+
+exec mkdir -p .ic/index/org/com/v1.0.0/
+exec touch .ic/index/org/com/v1.0.0/something
+ic fetch org.com v1.0.0
+exists .ic/cache/org/com/v1.0.0.zip
+exists .ic/index/org/com/v1.0.0/index.ic
+! exists .ic/index/org/com/v1.0.0/something

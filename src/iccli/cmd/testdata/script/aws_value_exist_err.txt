@@ -1,0 +1,8 @@
+# it should fail if stack does not exist
+
+! ic aws value test_dummy
+stderr 'Stack .* does not exist'
+
+-- .ic/config.ini --
+[default]
+aws_region = us-east-1

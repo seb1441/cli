@@ -1,0 +1,4 @@
+# should fail if no brick.yaml
+
+! ic update
+stderr 'brick.yaml not found'

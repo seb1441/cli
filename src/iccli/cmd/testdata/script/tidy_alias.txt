@@ -1,0 +1,17 @@
+# it should fail if same brick used as its own and as replacement
+
+! ic update --tidy
+stderr 'two different brick name'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+replace:
+  orgloc.comloc: org.com v1.1.0
+-- index.ic --
+import org.com
+import orgloc.comloc

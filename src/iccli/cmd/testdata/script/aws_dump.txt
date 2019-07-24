@@ -1,0 +1,42 @@
+# it should works as expected
+
+exec aws s3api create-bucket --bucket $UUID
+ic aws --s3-bucket $UUID dump foo --upload
+exists build/assets.json
+grep -count=3 'url' build/assets.json
+grep -count=3 'path' build/assets.json
+exists build/parameters.json
+grep 'test' build/parameters.json
+exists build/template.json
+grep -count=1 NoEcho build/template.json
+grep -count=1 awesome build/template.json
+stderr 'upload brick:build/template.json'
+stderr 'upload brick:brick.yaml'
+stderr 'upload brick:sub/module/index.ic'
+stderr 'upload index:assorg/asscom/v1.0.0/submodule/name.txt'
+ic aws --s3-bucket $UUID dump foo --upload
+! stderr 'upload'
+exec aws s3 rb --force s3://$UUID
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: .sub.module:brick
+assets:
+- brick.yaml
+- "**/*.ic"
+-- params.icp --
+from ic import util
+exp = util.sensitive("test")
+
+-- sub/module/index.ic --
+from assorg.asscom.submodule import brick as helper
+from ... import assets as top_assets
+from . import assets
+
+@resource
+def brick():
+    helper("helper")
+    top_assets["brick.yaml"]
+    assets["index.ic"]

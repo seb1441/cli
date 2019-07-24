@@ -1,0 +1,5 @@
+# it should fail if the directory already exists
+
+exec mkdir bar
+! ic new foo.bar
+stderr 'bar directory already exists'

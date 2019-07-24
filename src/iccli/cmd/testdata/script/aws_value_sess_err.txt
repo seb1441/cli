@@ -1,0 +1,15 @@
+# it should fail if cannot retrieve credentials
+
+env ICHOME=.ic_profile
+! ic aws value test_value
+stderr 'profile .* could not be found'
+
+env ICHOME=.ic_region
+env AWS_DEFAULT_REGION=''
+! ic aws value test_value
+stderr 'missing aws region'
+
+-- .ic_profile/config.ini --
+[default]
+aws_profile = dummy
+-- .ic_region/config.ini --

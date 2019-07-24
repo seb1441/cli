@@ -1,0 +1,7 @@
+# it should fail if invalid name argument
+
+! ic aws update realorg.realcom:brick v1.0.0 dummy --remove
+stderr 'unexpected\ extra\ arguments\ \(v1\.0\.0\,\ dummy\)'
+
+! ic aws update --remove
+stderr 'Missing argument "name"'

@@ -1,0 +1,6 @@
+-- brick.yaml --
+name: org.com
+version: v1.1.0
+private: true
+main: :brick
+-- index.ic --

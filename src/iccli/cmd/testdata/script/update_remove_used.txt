@@ -1,0 +1,14 @@
+# it should fail if removing an used brick
+
+! ic update --remove org.com
+stderr 'used brick'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+-- index.ic --
+import org.com

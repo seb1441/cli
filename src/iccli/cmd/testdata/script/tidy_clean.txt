@@ -1,0 +1,15 @@
+# it should remove created dirs only if empty
+
+exec mkdir -p .ic/cache/org/other
+! ic update --tidy
+exists .ic/cache/org/other
+! exists .ic/cache/org/com
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.42.0
+-- index.ic --

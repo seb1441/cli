@@ -1,0 +1,3 @@
+include src/iccli/cmd/callback.html
+include src/iccli/cmd/licenses.json
+include src/iccli/cloud/aws/resources/*.json

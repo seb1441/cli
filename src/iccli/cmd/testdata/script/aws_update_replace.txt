@@ -1,0 +1,50 @@
+# it should replace resource
+
+ic aws update test_update_replace --yes
+ic aws update test_update_replace --params name="test_update_replace_2" --yes > output.txt
+diff output.ref.txt output.txt
+ic aws update test_update_replace --remove --yes
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- params.icp --
+name="test_update_replace_1"
+-- index.ic --
+from ic import aws
+
+@resource
+def brick(name):
+    role = aws.iam.role(
+        "role",
+        assume_role_policy_document={
+            "Statement": {
+                "Effect": "Allow",
+                "Principal": {"Service": "lambda.amazonaws.com"},
+                "Action": "sts:AssumeRole",
+            }
+        }
+    )
+    aws.lambda_.function(
+        "fn",
+        function_name=name,
+        runtime="python3.6",
+        role=role["arn"],
+        handler="index.handle",
+        code={"zip_file": "def handle(): ..."}
+    )
+-- output.ref.txt --
+Plan review
+
+⬆ plan UPDATE
+└── test_update_replace
+    └── ⏏ fn REPLACE aws.lambda_.function
+Plan accepted
+
+Plan summary
+
+⬆ plan UPDATE_COMPLETE
+└── test_update_replace
+    └── ⏏ fn DELETE_COMPLETE aws.lambda_.function

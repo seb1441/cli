@@ -1,0 +1,26 @@
+# it should fail if no s3 bucket provided and using assets
+
+ic aws dump ic.aws.cloudformation:wait_condition_handle foo
+
+! ic aws dump foo
+stderr 'missing aws s3 bucket'
+
+! ic aws dump .other:brick foo --upload
+stderr 'missing aws s3 bucket'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- index.ic --
+from . import assets
+
+@resource
+def brick():
+  print(assets["brick.yaml"])
+-- other.ic --
+from ic import aws
+@resource
+def brick():
+  aws.cloudformation.wait_condition_handle('wch')

@@ -1,0 +1,9 @@
+-- brick.yaml --
+name: org.scycle
+version: v1.0.0
+private: true
+main: :brick
+require:
+  org.mcycle: v1.0.0
+-- index.ic --
+from org import mcycle

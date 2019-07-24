@@ -1,0 +1,4 @@
+# it should fail if the cloud brick does not exist
+
+! ic aws tree dummy 
+stderr 'Stack .* does not exist'

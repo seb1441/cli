@@ -1,0 +1,6 @@
+[run]
+omit=
+    /usr/local/*
+    */testdata/*
+    src/ic/cmd/script_test.py
+    src/ic/cloud/aws/specs/update.py

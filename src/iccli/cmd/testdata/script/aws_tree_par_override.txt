@@ -1,0 +1,13 @@
+# it should use the cli params if any
+
+! ic aws tree ic.aws.lambda_:function
+stderr 'incompatible type'
+ic aws tree ic.aws.lambda_:function --params role=role,handler=handler
+stdout 'brick aws.lambda_.function'
+
+-- params.icp --
+handler=63
+role=36
+runtime="runtime"
+code=dict()
+extra=42

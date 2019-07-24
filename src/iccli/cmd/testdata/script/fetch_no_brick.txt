@@ -1,0 +1,5 @@
+# it should fail if the brick does not exist
+
+! ic fetch unknown.dummy v1.0.0
+! exists .ic/cache/unknown
+stderr 'not found'

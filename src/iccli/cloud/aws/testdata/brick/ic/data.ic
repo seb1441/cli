@@ -1,0 +1,9 @@
+from . import assets
+
+data = [a for a in assets]
+asset = assets["data.ic"]
+text = asset.text
+url = asset.url
+uri = asset.uri
+bucket = asset.bucket
+key = asset.key

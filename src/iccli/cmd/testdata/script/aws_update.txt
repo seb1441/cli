@@ -1,0 +1,81 @@
+# it should create/update/remove
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes > output.txt
+diff output_create.ref.txt output.txt
+! ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes --no-noop
+stderr 'test_update is already up to date'
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes
+stderr 'test_update is already up to date'
+ic aws update test_update --yes > output.txt
+diff output_update1.ref.txt output.txt
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes > output.txt
+diff output_update2.ref.txt output.txt
+ic aws update test_update --remove --yes > output.txt
+exec cat output.txt
+diff output_remove.ref.txt output.txt
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+
+-- index.ic --
+from ic import aws
+
+@resource
+def brick():
+    aws.cloudformation.wait_condition_handle('wch')
+
+-- output_create.ref.txt --
+Plan review
+
+✚ plan CREATE
+└── ✚ test_update CREATE aws.cloudformation.wait_condition_handle
+Plan accepted
+
+Plan summary
+
+✚ plan CREATE_COMPLETE
+└── ✚ test_update CREATE_COMPLETE aws.cloudformation.wait_condition_handle
+-- output_update1.ref.txt --
+Plan review
+
+⬆ plan UPDATE
+├── test_update
+│   └── ✚ wch CREATE aws.cloudformation.wait_condition_handle
+└── ✖ test_update DELETE aws.cloudformation.wait_condition_handle
+Plan accepted
+
+Plan summary
+
+⬆ plan UPDATE_COMPLETE
+├── test_update
+│   └── ✚ wch CREATE_COMPLETE aws.cloudformation.wait_condition_handle
+└── ✖ test_update DELETE_COMPLETE aws.cloudformation.wait_condition_handle
+-- output_update2.ref.txt --
+Plan review
+
+⬆ plan UPDATE
+├── test_update
+│   └── ✖ wch DELETE aws.cloudformation.wait_condition_handle
+└── ✚ test_update CREATE aws.cloudformation.wait_condition_handle
+Plan accepted
+
+Plan summary
+
+⬆ plan UPDATE_COMPLETE
+├── test_update
+│   └── ✖ wch DELETE_COMPLETE aws.cloudformation.wait_condition_handle
+└── ✚ test_update CREATE_COMPLETE aws.cloudformation.wait_condition_handle
+-- output_remove.ref.txt --
+Plan review
+
+✖ plan DELETE
+└── ✖ test_update DELETE aws.cloudformation.wait_condition_handle
+Plan accepted
+
+Plan summary
+
+✖ plan DELETE_COMPLETE
+└── ✖ test_update DELETE_COMPLETE aws.cloudformation.wait_condition_handle

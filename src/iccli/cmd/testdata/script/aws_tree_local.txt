@@ -1,0 +1,47 @@
+# it should display tree of the simpliest bricks
+
+# needs AWS_DEFAULT_REGION
+
+cd empty
+ic aws tree
+stdout 'brick'
+
+cd ../raw
+ic aws tree
+stdout 'brick aws.cloudformation.wait_condition_handle'
+
+cd ../nominal
+ic aws tree
+stdout 'brick\n.*wch aws.cloudformation.wait_condition_handle'
+
+-- empty/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- empty/index.ic --
+@resource
+def brick():
+    ...
+
+-- raw/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- raw/index.ic --
+from ic import aws
+
+brick = aws.cloudformation.wait_condition_handle
+
+-- nominal/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- nominal/index.ic --
+from ic import aws
+
+@resource
+def brick():
+    return aws.cloudformation.wait_condition_handle("wch")

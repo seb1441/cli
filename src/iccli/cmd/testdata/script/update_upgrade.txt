@@ -1,0 +1,21 @@
+# it should upgrade the given brick
+
+ic update org.com v1.1.0
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.1.0
+-- index.ic --
+import org.com

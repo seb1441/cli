@@ -1,0 +1,48 @@
+# should work with local replacement
+
+cd main
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+cd ..
+exists .ic/cache/org/com/v1.0.0.json
+exists .ic/index/org/com/v1.0.0/brick.yaml
+exists .ic/cache/org2/com/v1.0.0.json
+! exists .ic/index/org2/com/v1.0.0/brick.yaml
+
+-- main/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+replace:
+  orgloc.comloc: ../repl
+  orgloc.comlocv2: ../repl2
+-- main/brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  orgloc.comloc: v0.0.0
+  orgloc.comlocv2: v2.0.0
+replace:
+  orgloc.comloc: ../repl
+  orgloc.comlocv2: ../repl2
+-- main/index.ic --
+from orgloc import comloc, comlocv2
+-- repl/brick.yaml --
+name: orgloc.comloc
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+-- repl/index.ic --
+import org.com
+-- repl2/brick.yaml --
+name: orgloc.comlocv2
+version: v2.0.0
+private: true
+main: :brick
+require:
+  org2.com: v1.0.0

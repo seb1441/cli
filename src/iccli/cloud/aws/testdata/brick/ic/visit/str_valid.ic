@@ -1,0 +1,6 @@
+simple = "- simple -"
+fsimple = f"- fsimple -"
+ssimple = f"- s{simple} -"
+csimple = f"- {simple!r} -"
+cfsimple = f"- {simple!r:>14} -"
+ocomplex = f"- {simple!r:>14} {opaque()} {opaque()} -"

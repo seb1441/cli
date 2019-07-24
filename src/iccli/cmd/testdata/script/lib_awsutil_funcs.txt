@@ -1,0 +1,33 @@
+# it should output b64encode and cidr
+
+ic aws update test_lib_awsutil_funcs --yes
+ic aws value test_lib_awsutil_funcs | jq -r ".b64encode_opaque"
+stdout 'aHR0cHM='
+ic aws value test_lib_awsutil_funcs | jq -r ".b64encode"
+stdout 'aHR0cHM='
+ic aws value test_lib_awsutil_funcs | jq -r ".cidr_opaque"
+stdout '192.168.0.96/27'
+ic aws value test_lib_awsutil_funcs | jq -r ".cidr"
+stdout '192.168.0.96/27'
+ic aws update test_lib_awsutil_funcs --remove --yes
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- params.icp --
+from ic import util
+block = util.sensitive("192.168.0.0/24")
+-- index.ic --
+from ic import aws, awsutil
+
+@resource
+def brick(block):
+    wch = aws.cloudformation.wait_condition_handle("wch")
+    return {
+        "b64encode_opaque": awsutil.b64encode(wch["ref"].split("://")[0]),
+        "b64encode": awsutil.b64encode("https"),
+        "cidr_opaque": awsutil.cidr(block, 6, 5)[3],
+        "cidr": awsutil.cidr("192.168.0.0/24", 6, 5)[3]
+    }

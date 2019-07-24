@@ -1,0 +1,21 @@
+# it should use the params.icp file of the current directory even if in brick
+
+! ic aws tree ic.aws.lambda_:function
+stderr 'missing required keys'
+cd sub/module/
+ic aws tree ic.aws.lambda_:function
+stdout 'brick aws.lambda_.function'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- params.icp --
+...
+-- sub/module/params.icp --
+handler="handler"
+role="role"
+runtime="runtime"
+code=dict()
+extra=42

@@ -1,0 +1,11 @@
+# it should use the params.icp file of the current directory
+
+ic aws tree ic.aws.lambda_:function
+stdout 'brick aws.lambda_.function'
+
+-- params.icp --
+handler="handler"
+role="role"
+runtime="runtime"
+code=dict()
+extra=42

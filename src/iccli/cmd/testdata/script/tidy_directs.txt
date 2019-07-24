@@ -1,0 +1,25 @@
+# it should preserve direct dependencies
+
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.scycle: v1.0.0
+  org.mcycle: v1.0.0
+  org.ecycle: v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.ecycle: v1.0.0
+  org.scycle: v1.0.0
+-- index.ic --
+from org import scycle
+from org import ecycle

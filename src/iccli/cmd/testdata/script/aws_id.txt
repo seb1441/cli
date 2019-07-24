@@ -1,0 +1,4 @@
+# it should print id of stack
+
+ic aws id exp
+stdout 'ic-q23x3yse'

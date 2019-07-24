@@ -1,0 +1,4 @@
+# it should fail if no remote brick with the given name
+
+! ic aws update dummy --remove
+stderr 'brick does not exist: dummy'

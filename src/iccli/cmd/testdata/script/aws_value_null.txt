@@ -1,0 +1,19 @@
+# it should print value of stack
+
+ic aws update test_value_null --yes
+ic aws value test_value_null
+stdout 'null'
+ic aws update test_value_null --remove --yes
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+
+-- index.ic --
+from ic import aws
+
+@resource
+def brick():
+    aws.cloudformation.wait_condition_handle('wch')

@@ -1,0 +1,11 @@
+# it should re-prompt if invalid user input
+
+stdin 'foo.bar\nv2.0.0\nfoo.barv2\nv2.0.0\nYes\n\n\n\n'
+ic init
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml.ref --
+name: foo.barv2
+version: v2.0.0
+license: MIT
+main: :brick

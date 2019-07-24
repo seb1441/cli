@@ -1,0 +1,4 @@
+from . import assets
+
+data = [a for a in assets]
+text = assets["data.icp"].text

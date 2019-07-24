@@ -1,0 +1,10 @@
+# it should print value of stack
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_value --yes
+ic aws value test_value
+stdout '{"ref": "https://'
+ic aws update test_value --remove --yes
+
+-- .ic/config.ini --
+[default]
+aws_region = us-east-1

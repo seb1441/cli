@@ -1,0 +1,14 @@
+# should fail if downstream bricks excluded by main
+
+! ic update --tidy
+stderr 'depends on excluded'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+exclude:
+  org.ecycle: v1.0.0
+-- index.ic --
+import org.scycle

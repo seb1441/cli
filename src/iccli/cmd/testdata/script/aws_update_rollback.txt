@@ -1,0 +1,43 @@
+# it should rollback and clean stuff
+
+! ic aws update ic.aws.lambda_:function test_update_rollback --yes > output.txt
+diff output1.ref.txt output.txt
+! ic aws value test_update_rollback
+stderr 'does not exist'
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update_rollback --yes
+! ic aws update ic.aws.lambda_:function test_update_rollback --yes > output.txt
+diff output2.ref.txt output.txt
+exec aws cloudformation list-change-sets --stack-name $(ic aws id test_update_rollback) | jq ".Summaries"
+stdout '\[\]'
+ic aws update test_update_rollback --remove --yes
+
+-- params.icp --
+handler = ""
+role = ""
+code = {}
+runtime = ""
+-- output1.ref.txt --
+Plan review
+
+✚ plan CREATE
+└── ✚ test_update_rollback CREATE aws.lambda_.function
+Plan accepted
+
+Plan summary
+
+✚ plan DELETE_COMPLETE
+└── ✚ test_update_rollback DELETE_COMPLETE aws.lambda_.function
+-- output2.ref.txt --
+Plan review
+
+⬆ plan UPDATE
+├── ✖ test_update_rollback DELETE aws.cloudformation.wait_condition_handle
+└── ✚ test_update_rollback CREATE aws.lambda_.function
+Plan accepted
+
+Plan summary
+
+⬆ plan UPDATE_ROLLBACK_COMPLETE
+├── ✖ test_update_rollback PRISTINE aws.cloudformation.wait_condition_handle
+└── ✚ test_update_rollback DELETE_COMPLETE aws.lambda_.function

@@ -1,0 +1,13 @@
+# should fail if version not found in remote
+
+! ic update --tidy
+stderr 'not found'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.42.0
+-- index.ic --

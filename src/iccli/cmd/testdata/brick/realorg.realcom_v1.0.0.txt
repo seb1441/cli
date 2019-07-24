@@ -1,0 +1,18 @@
+-- brick.yaml --
+require: {}
+name: realorg.realcom
+version: v1.0.0
+private: true
+main: .submodule:brick
+-- submodule/index.ic --
+from ic import aws
+
+@resource
+def brick():
+    return aws.cloudformation.wait_condition_handle("wch")
+-- other/custom.ic --
+from ic import aws
+
+@resource
+def mine():
+    return aws.cloudformation.wait_condition_handle("exp")

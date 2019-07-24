@@ -1,0 +1,14 @@
+# should fail if no excluded version available
+
+! ic update --tidy
+stderr 'no version available'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+exclude:
+  org2.com: v1.0.0
+-- index.ic --
+import org2.com

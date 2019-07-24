@@ -1,0 +1,4 @@
+# it should fail if version given for a cloud brick
+
+! ic aws tree test_value v1.0.0
+stderr 'unexpected\ extra\ argument\ \(v1\.0\.0\)'

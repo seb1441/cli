@@ -1,0 +1,23 @@
+# it should handle cyclic bricks
+
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+exists .ic/index/org/scyclic/v1.0.0/brick.yaml
+exists .ic/index/org/ecyclic/v1.0.0/brick.yaml
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.scyclic: v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.scyclic: v1.0.0
+-- index.ic --
+import org.scyclic

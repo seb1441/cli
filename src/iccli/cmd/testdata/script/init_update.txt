@@ -1,0 +1,20 @@
+# it should update an existing brick.yaml with user modifications
+
+stdin 'baz.qux\nv1.1.0\n\nApache-2.0\n'
+ic init
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml --
+name: foo.bar
+assets:
+- '**/*.zip'
+version: v0.1.0
+license: MIT
+main: :brick
+-- brick.yaml.ref --
+name: baz.qux
+version: v1.1.0
+license: Apache-2.0
+main: :brick
+assets:
+- '**/*.zip'

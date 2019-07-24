@@ -1,0 +1,16 @@
+# should fail if local replacement error
+
+cd main
+! ic update --tidy
+stderr 'cannot parse replace'
+
+-- main/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+replace:
+  orgloc.comloc: ../repl
+-- main/index.ic --
+from orgloc import comloc
+-- repl/brick.yaml --

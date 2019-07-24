@@ -1,0 +1,24 @@
+# it should print value of stack
+
+ic aws update test_value_rich --yes
+ic aws value test_value_rich > value.json
+diff value.json.ref value.json
+ic aws update test_value_rich --remove --yes
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- index.ic --
+from ic import aws
+
+@resource
+def brick():
+    wch = aws.cloudformation.wait_condition_handle("wch")
+    return dict(
+        static=42,
+        dynamic=f"- {wch['ref'].split('//')[0].replace('t', 'x')} -",
+    )
+-- value.json.ref --
+{"dynamic": "- hxxps: -", "static": 42}

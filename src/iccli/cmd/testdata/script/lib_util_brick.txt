@@ -1,0 +1,26 @@
+# it should return the value of the deployed brick
+
+
+ic aws update ic.aws.cloudformation:wait_condition_handle test_lib_util_brick --yes
+cd test
+ic aws dump dummy
+stdout 'https://'
+ic aws update test_lib_util_brick --yes
+ic aws dump dummy
+stdout 'None'
+ic aws update test_lib_util_brick --remove --yes
+
+-- test/brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- test/params.icp --
+from ic import util
+print(util.brick("test_lib_util_brick"))
+-- test/index.ic --
+from ic import aws
+
+@resource
+def brick():
+    aws.cloudformation.wait_condition_handle("wch")

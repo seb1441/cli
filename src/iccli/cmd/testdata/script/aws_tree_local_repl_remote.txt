@@ -1,0 +1,25 @@
+# it should display tree of bricks with remote replacement
+
+# use re.escape for json matching
+ic aws --region us-east-1 tree --json
+stdout '\{"id":\ "4vv3llgh",\ "name":\ "brick",\ "children":\ \[\{"id":\ "jn2l6xep",\ "name":\ "wch",\ "type":\ "aws\.cloudformation\.wait_condition_handle"\}\]\}'
+diff brick.yaml.ref brick.yaml
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+replace:
+  orgloc.comloc: realorg.realcom v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  orgloc.comloc: v0.0.0
+replace:
+  orgloc.comloc: realorg.realcom v1.0.0
+-- index.ic --
+from orgloc.comloc.submodule import brick

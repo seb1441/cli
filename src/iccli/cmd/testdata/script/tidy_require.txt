@@ -1,0 +1,21 @@
+# should use the version specified in require
+
+ic update --tidy
+diff brick.yaml brick.yaml.ref
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+-- brick.yaml.ref --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+require:
+  org.com: v1.0.0
+-- index.ic --
+import org.com

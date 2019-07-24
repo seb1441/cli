@@ -1,0 +1,7 @@
+# it should fail of config.ini cannot be parsed
+
+! ic config
+stderr 'cannot parse'
+
+-- .ic/config.ini --
+[default

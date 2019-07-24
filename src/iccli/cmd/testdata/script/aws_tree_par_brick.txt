@@ -1,0 +1,18 @@
+# it should use the params.icp file of the brick if nothing else
+
+exec mkdir -p sub/module
+cd sub/module
+ic aws tree ic.aws.lambda_:function
+stdout 'brick aws.lambda_.function'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick
+-- params.icp --
+handler="handler"
+role="role"
+runtime="runtime"
+code=dict()
+extra=42

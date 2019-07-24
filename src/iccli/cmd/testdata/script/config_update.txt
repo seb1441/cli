@@ -1,0 +1,20 @@
+# it should update config according to user input
+
+stdin '\n\nupdated\n\n'
+ic config
+exists .ic/config.ini
+diff config.ini.ref .ic/config.ini
+
+-- .ic/config.ini --
+[default]
+aws_profile = profile
+aws_region = region
+aws_s3_bucket = bucket
+aws_s3_prefix = prefix
+-- config.ini.ref --
+[default]
+aws_profile = profile
+aws_region = region
+aws_s3_bucket = updated
+aws_s3_prefix = prefix
+

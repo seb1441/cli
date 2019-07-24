@@ -1,0 +1,30 @@
+# it should discard index assets and be deterministic
+
+ic pack
+exists brick.zip
+stderr 'asset.txt'
+stderr 'sub/module/index.ic'
+exec cp brick.zip brick.zip.ref
+exec sleep 1
+exec find . -exec touch {} +
+ic pack
+diff brick.zip brick.zip.ref
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: .sub.module:brick
+require:
+  assorg.asscom: v1.0.0
+assets:
+- asset.txt
+-- params.icp --
+-- sub/module/index.ic --
+from assorg.asscom.submodule import brick as helper
+
+@resource
+def brick():
+    helper("hlp")
+-- asset.txt --
+asset

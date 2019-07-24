@@ -1,0 +1,5 @@
+# it should download and unpack correctly
+
+ic fetch org.com v1.0.0
+exists .ic/cache/org/com/v1.0.0.zip
+exists .ic/index/org/com/v1.0.0/index.ic

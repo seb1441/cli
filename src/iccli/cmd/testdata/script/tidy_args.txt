@@ -1,0 +1,10 @@
+# it should fail if given any arg
+
+! ic update --tidy org.com
+stderr 'extra arg'
+
+-- brick.yaml --
+name: foo.bar
+version: v0.1.0
+private: true
+main: :brick

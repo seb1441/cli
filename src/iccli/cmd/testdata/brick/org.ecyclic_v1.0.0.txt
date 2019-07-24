@@ -1,0 +1,9 @@
+-- brick.yaml --
+name: org.ecyclic
+version: v1.0.0
+private: true
+main: :brick
+require:
+  org.scyclic: v1.0.0
+-- index.ic --
+import org.scyclic
