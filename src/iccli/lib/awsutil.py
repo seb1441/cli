@@ -30,7 +30,8 @@ def cidr(block, count, bits):
 
     if isinstance(block, types.Opaque):
         return types.CIDR(block, count, bits)
-    ips = list(map(str, ipaddress.ip_network(block).subnets(new_prefix=32 - bits)))
+    ipn = ipaddress.ip_network(block)
+    ips = list(map(str, ipn.subnets(new_prefix=ipn.max_prefixlen - bits)))
     if len(ips) < count:
         raise IndexError("list index out of range")
     return ips[:count]

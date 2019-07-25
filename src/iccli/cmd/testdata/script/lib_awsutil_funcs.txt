@@ -5,10 +5,14 @@ ic aws value test_lib_awsutil_funcs | jq -r ".b64encode_opaque"
 stdout 'aHR0cHM='
 ic aws value test_lib_awsutil_funcs | jq -r ".b64encode"
 stdout 'aHR0cHM='
-ic aws value test_lib_awsutil_funcs | jq -r ".cidr_opaque"
+ic aws value test_lib_awsutil_funcs | jq -r ".cidrv4_opaque"
 stdout '192.168.0.96/27'
-ic aws value test_lib_awsutil_funcs | jq -r ".cidr"
+ic aws value test_lib_awsutil_funcs | jq -r ".cidrv4"
 stdout '192.168.0.96/27'
+ic aws value test_lib_awsutil_funcs | jq -r ".cidrv6_opaque"
+stdout '2001:db8:1234:1a03:0:0:0:0/64'
+ic aws value test_lib_awsutil_funcs | jq -r ".cidrv6"
+stdout '2001:db8:1234:1a03::/64'
 ic aws update test_lib_awsutil_funcs --remove --yes
 
 -- brick.yaml --
@@ -18,16 +22,19 @@ private: true
 main: :brick
 -- params.icp --
 from ic import util
-block = util.sensitive("192.168.0.0/24")
+blockv4 = util.sensitive("192.168.0.0/24")
+blockv6 = util.sensitive("2001:db8:1234:1a00::/56")
 -- index.ic --
 from ic import aws, awsutil
 
 @resource
-def brick(block):
+def brick(blockv4, blockv6):
     wch = aws.cloudformation.wait_condition_handle("wch")
     return {
         "b64encode_opaque": awsutil.b64encode(wch["ref"].split("://")[0]),
         "b64encode": awsutil.b64encode("https"),
-        "cidr_opaque": awsutil.cidr(block, 6, 5)[3],
-        "cidr": awsutil.cidr("192.168.0.0/24", 6, 5)[3]
+        "cidrv4_opaque": awsutil.cidr(blockv4, 6, 5)[3],
+        "cidrv4": awsutil.cidr("192.168.0.0/24", 6, 5)[3],
+        "cidrv6_opaque": awsutil.cidr(blockv6, 6, 64)[3],
+        "cidrv6": awsutil.cidr("2001:db8:1234:1a00::/56", 6, 64)[3],
     }
