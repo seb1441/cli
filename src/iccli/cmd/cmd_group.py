@@ -90,7 +90,7 @@ def main(args: Optional[List[str]] = None):
     # pylint: disable=broad-except
     exit_code = 1
     try:
-        cmd.main(prog_name="iccli", args=args, standalone_mode=False)
+        cmd.main(prog_name="ic", args=args, standalone_mode=False)
         exit_code = 0
     except util.UserError as exc:
         LOGGER.error(str(exc))
