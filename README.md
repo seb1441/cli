@@ -13,6 +13,7 @@ infrastructures, share, and collaborate, irrespective of cloud providers.
 - Source code: https://github.com/icdotdev/cli
 - Issue tracker: https://github.com/icdotdev/cli/issues
 - Documentation: https://docs.ic.dev
+- Chat: https://slack.ic.dev 
 
 # Glimpse
 
