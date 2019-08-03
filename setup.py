@@ -38,7 +38,7 @@ class build_py(setuptools.command.build_py.build_py):
 
 setuptools.setup(
     name="iccli",
-    version="0.1.0",
+    version="0.2.0",
     license="AGPL-3.0-only",
     long_description_content_type="text/markdown",
     long_description=pathlib.Path("README.md").read_text(),
