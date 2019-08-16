@@ -39,10 +39,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 @click.command(name="login")
-@click.option(
-    "--manual", is_flag=True, help="Paste links into your browser by yourself."
-)
-def cmd(*, manual: bool):
+def cmd():
     """Log in to ic.dev"""
     auth.init()
     if auth.STATE.get() < auth.State.INIT:
@@ -96,15 +93,19 @@ def cmd(*, manual: bool):
         ctrl = flask.request.args["state"]
         return importlib.resources.read_text(__package__, "callback.html")
 
-    if manual:
-        click.echo(login_url)
-    else:
-        webbrowser.open_new(login_url)
+    click.echo("If nothing happens, copy and paste this URL into your browser:\n")
+    click.echo(login_url)
+    click.echo()
+    webbrowser.open_new(login_url)
 
     server = Server()
     server.start()
-    while not terminate:
-        time.sleep(1)
+    try:
+        while not terminate:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        server.shutdown()
+        raise
     server.shutdown()
     if state != ctrl:
         raise util.UserError(

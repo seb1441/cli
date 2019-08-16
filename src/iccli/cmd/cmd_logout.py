@@ -32,10 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 @click.command(name="logout")
-@click.option(
-    "--manual", is_flag=True, help="Paste links into your browser by yourself."
-)
-def cmd(*, manual: bool):
+def cmd():
     """Log out from ic.dev"""
     if auth.STATE.get() < auth.State.INIT:
         raise util.UserError("cannot init auth module")
@@ -67,15 +64,19 @@ def cmd(*, manual: bool):
         terminate = True
         return importlib.resources.read_text(__package__, "callback.html")
 
-    if manual:
-        click.echo(logout_url)
-    else:
-        webbrowser.open_new(logout_url)
+    click.echo("If nothing happens, copy and paste this URL into your browser:\n")
+    click.echo(logout_url)
+    click.echo()
+    webbrowser.open_new(logout_url)
 
     server = Server()
     server.start()
-    while not terminate:
-        time.sleep(1)
+    try:
+        while not terminate:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        server.shutdown()
+        raise
     server.shutdown()
 
     auth.IDENTITY_ID.set("")
