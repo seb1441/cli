@@ -74,7 +74,6 @@ setuptools.setup(
         "arrow ~= 0.14",
         "boto3 ~= 1.9",
         "click ~= 7.0",
-        "colorama ~= 0.4",
         "flask ~= 1.0",
         "mypy-extensions ~= 0.4",
         "pyjwt ~= 1.7",

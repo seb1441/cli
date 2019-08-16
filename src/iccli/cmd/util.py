@@ -18,7 +18,7 @@
 import logging
 import sys
 
-import colorama
+import click
 
 
 class UserError(Exception):
@@ -34,14 +34,14 @@ class UserError(Exception):
 class LoggingStreamHandler(logging.StreamHandler):
     def format(self, record: logging.LogRecord) -> str:  # pragma: no cover
         msg = super().format(record)
+        if not sys.stderr.isatty():
+            return msg
         color = ""
         if record.levelno >= logging.ERROR:
-            color = colorama.Fore.RED
+            color = "red"
         elif record.levelno == logging.WARNING:
-            color = colorama.Fore.YELLOW
-        if sys.stderr.isatty():
-            return f"{color}{msg}{colorama.Style.RESET_ALL}"
-        return msg
+            color = "yellow"
+        return click.style(msg, fg=color)
 
 
 def configure_logger(level: int):
