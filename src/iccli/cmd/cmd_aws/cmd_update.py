@@ -23,8 +23,19 @@ import re
 import sys
 import weakref
 from collections import deque
-from typing import (IO, Dict, Iterable, Iterator, List, Mapping, Optional, Set,
-                    Tuple, Union, cast)
+from typing import (
+    IO,
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Mapping,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
 
 import click
 import treelib

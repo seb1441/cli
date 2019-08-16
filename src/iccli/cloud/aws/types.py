@@ -138,6 +138,7 @@ class Join(Str):
         self.delim = delim
         self.args = args
 
+
 class Ref(Str):
     def __init__(self, rid: str):
         self.rid = rid

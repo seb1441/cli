@@ -24,8 +24,17 @@ import re
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 from itertools import chain
-from typing import (Any, Iterable, List, Mapping, MutableMapping, NamedTuple,
-                    Optional, Set, Union)
+from typing import (
+    Any,
+    Iterable,
+    List,
+    Mapping,
+    MutableMapping,
+    NamedTuple,
+    Optional,
+    Set,
+    Union,
+)
 
 import semver
 from ruamel.yaml import YAML, YAMLError

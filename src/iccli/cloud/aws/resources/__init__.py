@@ -24,8 +24,21 @@ from contextlib import suppress
 from copy import deepcopy
 from datetime import date, datetime
 from functools import lru_cache, partial, reduce
-from typing import (Any, Callable, Dict, List, Mapping, MutableMapping,
-                    NoReturn, Optional, Set, Tuple, Type, Union, cast)
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Mapping,
+    MutableMapping,
+    NoReturn,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from mypy_extensions import KwArg, VarArg
 

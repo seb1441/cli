@@ -21,8 +21,16 @@ from functools import partial
 import pytest
 
 from .. import types
-from . import (ObjectChecker, _check_any, _check_list, _check_map,
-               _check_number, _check_timestamp, _check_type, load)
+from . import (
+    ObjectChecker,
+    _check_any,
+    _check_list,
+    _check_map,
+    _check_number,
+    _check_timestamp,
+    _check_type,
+    load,
+)
 
 REGIONS_TESTS = map(
     lambda t: pytest.param(t, id=t),

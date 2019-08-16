@@ -98,8 +98,7 @@ See https://github.com/golang/go/tree/323212b9e6/src/cmd/go/internal/mvs
 
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from typing import (Callable, Iterable, List, MutableMapping, MutableSet,
-                    Optional)
+from typing import Callable, Iterable, List, MutableMapping, MutableSet, Optional
 
 from typing_extensions import Protocol
 

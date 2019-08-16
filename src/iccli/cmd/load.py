@@ -26,8 +26,20 @@ import zipfile
 from collections import OrderedDict, deque
 from functools import lru_cache
 from itertools import chain
-from typing import (Any, BinaryIO, Iterable, List, MutableMapping, MutableSet,
-                    Optional, Sequence, Set, TextIO, Tuple, cast)
+from typing import (
+    Any,
+    BinaryIO,
+    Iterable,
+    List,
+    MutableMapping,
+    MutableSet,
+    Optional,
+    Sequence,
+    Set,
+    TextIO,
+    Tuple,
+    cast,
+)
 
 import requests
 from ruamel.yaml import YAML
