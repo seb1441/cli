@@ -28,44 +28,44 @@
 
 ## Introduction
 
-[ic.dev][ic-home] is an open source project that makes it easy to 
+[ic.dev][ic-home] is an open source project that makes it easy to
 compose, share, and deploy cloud infrastructure bricks.
 
-- **Native**: As we rely on the official [AWS CloudFormation Resource 
-Specification][cfn-spec], you have access to 100% of AWS resources. We 
-also compile your code to native AWS CloudFormation, so that you can 
-always access the raw templates and benefit from state management by 
-AWS CloudFormation.
-- **Familiar**: Write your infrastructure logic in Python, the 
-well-known easy-to-use, powerful, and versatile language. Use modern 
-software development techniques and forget about all [AWS CloudFormation 
-quirks and weirdness][cfn-intrinsic] thanks to our [smart 
-purpose-built parser][ic-parser].
-- **Open**: Get involved and be part of the adventure. Join our [Slack 
-channel][ic-slack], browse our [GitHub repositories][ic-github], 
-[submit issues][ic-issues] or [pull requests][ic-pulls] for bugs you 
-find, and ask for any new features you may want to be implemented.
+- **Native**: As we rely on the official [AWS CloudFormation Resource
+  Specification][cfn-spec], you have access to 100% of AWS resources. We
+  also compile your code to native AWS CloudFormation, so that you can
+  always access the raw templates and benefit from state management by
+  AWS CloudFormation.
+- **Familiar**: Write your infrastructure logic in Python, the
+  well-known easy-to-use, powerful, and versatile language. Use modern
+  software development techniques and forget about all [AWS
+  CloudFormation quirks and weirdness][cfn-intrinsic] thanks to our
+  [smart purpose-built parser][ic-parser].
+- **Open**: Get involved and be part of the adventure. Join our [Slack
+  channel][ic-slack], browse our [GitHub repositories][ic-github],
+  [submit issues][ic-issues] or [pull requests][ic-pulls] for bugs you
+  find, and ask for any new features you may want to be implemented.
 - **Modular**: [Everything is a resource][ic-rescs]. Whether it be a
-simple Amazon S3 bucket or a serverless e-commerce app, combine any 
-resources into more high-level bricks. View your whole infrastructure as 
-a nested tree of arbitrary level and gain unprecedented insights about 
-your configuration.
-- **Community**: Need a particular service or even a whole application? 
-Don't reinvent the wheel. We ship with a [free and public 
-index][ic-index] to allow authors and contributors to make their bricks 
-available for the community to use under open source license terms. 
-Before writing a line of code, search in the index!
+  simple Amazon S3 bucket or a serverless e-commerce app, combine any
+  resources into more high-level bricks. View your whole infrastructure
+  as a nested tree of arbitrary level and gain unprecedented insights
+  about your configuration.
+- **Community**: Need a particular service or even a whole application?
+  Don't reinvent the wheel. We ship with a [free and public
+  index][ic-index] to allow authors and contributors to make their bricks
+  available for the community to use under open source license terms.
+  Before writing a line of code, search in the index!
 
 [Learn how to use IC CLI for creating your infrastructure][ic-start].
 
 ## Installation
 
-IC CLI is available as the [`iccli` package][ic-pypi] on 
+IC CLI is available as the [`iccli` package][ic-pypi] on
 [PyPI][pypi-home].
 
-We also have an [open documentation][ic-website] to make [getting 
-started][ic-start] with IC CLI even easier. If you need any further 
-assistance, come and talk to the community on our [Slack 
+We also have an [open documentation][ic-website] to make [getting
+started][ic-start] with IC CLI even easier. If you need any further
+assistance, come and talk to the community on our [Slack
 channel][ic-slack].
 
 ## Documentation
@@ -83,20 +83,20 @@ The documentation is divided into several sections:
 - [Dependencies](https://ic.dev/docs/en/dependencies)
 - [Standard Library](https://ic.dev/docs/en/stdlib)
 
-You can improve it by sending pull requests to [this 
+You can improve it by sending pull requests to [this
 repository][ic-website].
 
 ## License
 
 Copyright 2019 Farzad Senart and Lionel Suss. All rights reserved.
 
-Unless otherwise stated, the source code is licensed under the 
+Unless otherwise stated, the source code is licensed under the
 [GNU Affero General Public License Version 3 (AGPLv3)][ic-license].
 
 However, the [IC Standard Library][ic-stdlib], the only API between your
-source code and the AGPLv3 licensed source code is licensed under the 
+source code and the AGPLv3 licensed source code is licensed under the
 [Apache License Version 2.0][ic-stdlib-license]. Therefore, when using
-the IC CLI to author your infrastructure resources, **you are NOT 
+the IC CLI to author your infrastructure resources, **you are NOT
 REQUIRED to release your source code under a GPL license**.
 
 [ic-license]: https://github.com/icdotdev/cli/blob/master/LICENSE
@@ -106,7 +106,7 @@ REQUIRED to release your source code under a GPL license**.
 [ic-slack]: https://slack.ic.dev
 [ic-github]: https://github.com/icdotdev
 [ic-issues]: https://github.com/icdotdev/cli/issues
-[ic-pulls]:  https://github.com/icdotdev/cli/pulls
+[ic-pulls]: https://github.com/icdotdev/cli/pulls
 [ic-rescs]: https://ic.dev/docs/en/resources
 [ic-index]: https://ic.dev/docs/en/community
 [ic-start]: https://ic.dev/docs/en/installation

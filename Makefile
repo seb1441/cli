@@ -18,6 +18,7 @@ lint:
 
 format:
 	black --include '(\.pyi?|\.icp?)$$' .
+	prettier --end-of-line lf --write README.md
 
 install:
 	pip install -e .[dev]
