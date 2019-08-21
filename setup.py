@@ -46,7 +46,6 @@ setuptools.setup(
     project_urls={
         "Source": "https://github.com/icdotdev/cli",
         "Issues": "https://github.com/icdotdev/cli/issues",
-        "Documentation": "https://docs.ic.dev",
     },
     packages=setuptools.find_packages(where="src"),
     package_dir={"": "src"},
