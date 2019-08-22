@@ -17,12 +17,14 @@
 
 import base64
 import hashlib
+import logging
 import re
 from contextvars import ContextVar, copy_context
 from functools import wraps
 from types import MethodType
 from typing import Any, Iterable, Iterator, MutableMapping, Optional, cast
 
+LOGGER = logging.getLogger(__name__)
 PARENT: ContextVar[Optional["Resource"]] = ContextVar("parent")
 
 
@@ -48,6 +50,11 @@ class Resource:
         self._parent = PARENT.get(None)
         if self._parent:
             # pylint: disable=protected-access
+            if name in self._parent._children:
+                LOGGER.warning(
+                    "%r node has been erased",
+                    ".".join(self._parent._children[name].lineage),
+                )
             self._parent._children[name] = self
 
     @property

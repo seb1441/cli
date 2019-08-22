@@ -219,3 +219,19 @@ def test_custom():
         resc("custom", service_token="dummy", Mixed_Case=42)
 
     resc("custom", service_token="dummy", custom_prop_1=42, custom_prop_2="Foo")
+
+
+def test_erasure(caplog):
+    from ....core import resource
+
+    spec = load("us-east-1")
+    bucket = spec["aws"]["s3"]["bucket"]
+
+    @resource.resource
+    def root():
+        bucket("same")
+        bucket("same")
+
+    root("root")
+
+    assert "'root.same.aws.s3.bucket' node has been erased" in caplog.text

@@ -91,6 +91,21 @@ def test_decorator():
     assert rescs[1] is rescs[2]._parent
 
 
+def test_erasure(caplog):
+    @resource.resource
+    def root():
+        res("same")
+        res("same")
+
+    @resource.resource
+    def res():
+        return
+
+    root("root")
+
+    assert "'root.same' node has been erased" in caplog.text
+
+
 INFO_DICT_TESTS = map(
     lambda t: pytest.param(*t[0:], id=t[0]),
     [
