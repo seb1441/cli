@@ -1,6 +1,7 @@
 [run]
 omit=
     /usr/local/*
+    /root/.local/*
     */testdata/*
-    src/ic/cmd/script_test.py
-    src/ic/cloud/aws/specs/update.py
+    src/iccli/cmd/script_test.py
+    src/iccli/cloud/aws/specs/update.py

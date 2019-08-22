@@ -21,10 +21,10 @@ format:
 	prettier --end-of-line lf --write README.md
 
 install:
-	pip install -e .[dev]
+	pip install --user -e .[dev]
 
 upgrade:
-	pip install -e .[dev] --upgrade
+	pip install --user -e .[dev] --upgrade
 
 dist:
 	rm -rf .eggs build dist

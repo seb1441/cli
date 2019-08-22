@@ -90,7 +90,7 @@ class _Script:
             {
                 k: v
                 for k, v in os.environ.items()
-                if k.startswith(("COV", "PYTEST", "AWS"))
+                if k.startswith(("COV", "PYTEST", "AWS", "PATH"))
             },
             PWD=str(self.cd),
             ICHOME=str(self.cwd / ".ic"),
