@@ -56,6 +56,23 @@ def version():
     )
 
 
+def check_version():
+    remote = config.REMOTE_CONFIG.get(None)
+    if not remote:
+        return
+    curr = pkg_resources.require("iccli")[0].version
+    real = remote["dist"]["version"]
+    if curr == real:
+        return
+    LOGGER.warning(
+        "You are using iccli version %s, however version %s is available.\n"
+        "You should consider upgrading via the "
+        "'python3 -m pip install --upgrade iccli' command.",
+        curr,
+        real,
+    )
+
+
 @click.group(name="ic")
 @click.option("--debug", flag_value=logging.DEBUG, help="Show all debug logs.")
 @click.option("--profile", default="default", help="Config profile to use.")
@@ -65,6 +82,7 @@ def cmd(ctx, *, debug, profile):
     """Bricks and mortar for cloud developers."""
     util.configure_logger(debug or logging.INFO)
     config.load(profile)
+    check_version()
     sub = ctx.invoked_subcommand
     if profile not in config.CONFIG.get() and sub not in ("config", "aws"):
         raise util.UserError(f"config profile {profile!r} not found")

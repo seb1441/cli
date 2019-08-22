@@ -20,6 +20,9 @@ import logging
 from contextvars import ContextVar
 from os import environ
 from pathlib import Path
+from typing import Any
+
+import requests
 
 from . import util
 
@@ -30,6 +33,7 @@ CONFIG_PATH = HOME_PATH / "config.ini"
 PROXY_URL = environ.get("ICPROXY", "https://api.ic.dev")
 PROFILE: ContextVar[str] = ContextVar("profile")
 CONFIG: ContextVar[configparser.ConfigParser] = ContextVar("config")
+REMOTE_CONFIG: ContextVar[Any] = ContextVar("remote_config")
 LOGGER = logging.getLogger(__name__)
 
 if not HOME_PATH.exists():
@@ -51,6 +55,14 @@ def load(profile: str):
             raise util.UserError("cannot parse config.ini")
     PROFILE.set(profile)
     CONFIG.set(config)
+
+    # pylint: disable=bare-except
+    try:
+        with requests.get(f"{PROXY_URL}/cliv1/config.json", timeout=1) as req:
+            req.raise_for_status()
+            REMOTE_CONFIG.set(req.json())
+    except:
+        ...
 
 
 def save():

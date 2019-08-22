@@ -59,19 +59,14 @@ def init():
     # pylint: disable=bare-except,global-statement
     global REGION, USER_POOL_ID, ID_POOL_ID, CLIENT_ID
     if not CREDS_PATH.exists():
-        try:
-            with requests.get(
-                f"{config.PROXY_URL}/cliv1/config.json", timeout=1
-            ) as req:
-                req.raise_for_status()
-                res = req.json()
-                REGION = res["auth"]["region"]
-                USER_POOL_ID = res["auth"]["user_pool_id"]
-                ID_POOL_ID = res["auth"]["id_pool_id"]
-                CLIENT_ID = res["auth"]["client_id"]
-                save()
-        except:
+        data = config.REMOTE_CONFIG.get(None)
+        if not data:
             return
+        REGION = data["auth"]["region"]
+        USER_POOL_ID = data["auth"]["user_pool_id"]
+        ID_POOL_ID = data["auth"]["id_pool_id"]
+        CLIENT_ID = data["auth"]["client_id"]
+        save()
     data = json.loads(CREDS_PATH.read_text())
     REGION = data["region"]
     USER_POOL_ID = data["user_pool_id"]
