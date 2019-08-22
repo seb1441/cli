@@ -28,6 +28,8 @@
 
 ## Introduction
 
+> Read the introduction post on [Medium][medium-announce].
+
 [ic.dev][ic-home] is an open source project that makes it easy to
 compose, share, and deploy cloud infrastructure bricks.
 
@@ -116,3 +118,4 @@ REQUIRED to release your source code under a GPL license**.
 [cfn-spec]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html
 [cfn-intrinsic]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html
 [pypi-home]: https://pypi.org
+[medium-announce]: https://medium.com/icdotdev/introducing-icdotdev-d9335fb1bad
