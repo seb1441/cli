@@ -1,14 +1,14 @@
 # it should create/update/remove
 
-ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes > output.txt
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes | head -10 > output.txt
 diff output_create.ref.txt output.txt
 ! ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes --no-noop
 stderr 'test_update is already up to date'
 ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes
 stderr 'test_update is already up to date'
-ic aws update test_update --yes > output.txt
+ic aws update test_update --yes | head -14 > output.txt
 diff output_update1.ref.txt output.txt
-ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes > output.txt
+ic aws update ic.aws.cloudformation:wait_condition_handle test_update --yes | head -14 > output.txt
 diff output_update2.ref.txt output.txt
 ic aws update test_update --remove --yes > output.txt
 exec cat output.txt

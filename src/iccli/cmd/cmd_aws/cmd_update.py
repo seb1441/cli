@@ -17,6 +17,7 @@
 
 import asyncio
 import io
+import json
 import logging
 import pathlib
 import re
@@ -40,6 +41,7 @@ from typing import (
 import click
 import treelib
 import urwid
+from pygments import formatters, highlight, lexers
 
 from ...cloud.aws import config, encode
 from ...cloud.aws import util as aws_util
@@ -122,6 +124,13 @@ def cmd(
             LOGGER.info(msg)
             return
         _display(tree, states, state, yes)
+    click.secho("\nInstance value\n", fg="magenta")
+    value = json.dumps(stack.Stack(_idn).value, indent=2, separators=(", ", ": "))
+    if sys.stdout.isatty():  # pragma: no cover
+        # pylint: disable=no-member
+        # PyCQA/pylint#491
+        value = highlight(value, lexers.JsonLexer(), formatters.TerminalFormatter())
+    click.echo(value, nl=not sys.stdout.isatty())
 
 
 def _display(

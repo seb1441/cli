@@ -75,6 +75,7 @@ setuptools.setup(
         "click ~= 7.0",
         "flask ~= 1.0",
         "mypy-extensions ~= 0.4",
+        "pygments ~= 2.4",
         "pyjwt ~= 1.7",
         "requests ~= 2.22",
         "semver ~= 2.8",

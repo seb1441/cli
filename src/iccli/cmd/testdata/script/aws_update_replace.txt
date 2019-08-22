@@ -48,3 +48,7 @@ Plan summary
 ⬆ plan UPDATE_COMPLETE
 └── test_update_replace
     └── ⏏ fn DELETE_COMPLETE aws.lambda_.function
+
+Instance value
+
+null
