@@ -19,6 +19,7 @@ import importlib.resources
 import inspect
 import json
 import numbers
+import re
 from collections import defaultdict
 from contextlib import suppress
 from copy import deepcopy
@@ -246,9 +247,12 @@ def _check_map(items: Callable[[Any], NoReturn], val: Any) -> Any:
 class ObjectChecker:
     # pylint: disable=too-few-public-methods
 
-    items: Mapping[str, Callable[[Any], NoReturn]]
+    items: Dict[str, Callable[[Any], NoReturn]]
     reqs: Set[str]
     trans: Mapping[str, str]
+
+    def __init__(self, custom: bool = False):
+        self.custom = custom
 
     def __call__(self, val: Any) -> Any:
         if val is None:
@@ -256,7 +260,7 @@ class ObjectChecker:
         else:
             _check_type((dict,), val)
         extra = set(val.keys()) - set(self.items.keys())
-        if extra:
+        if extra and not self.custom:
             raise TypeError(f"got unexpected keys: {extra!r}")
         missing = self.reqs - {k for k, v in val.items() if v is not None}
         if missing:
@@ -265,7 +269,14 @@ class ObjectChecker:
         for prop, item in val.items():
             if item is not None:
                 try:
-                    res[self.trans[prop]] = self.items[prop](item)
+                    if prop in extra:
+                        if not re.fullmatch(r"[a-z0-9_]+", prop):
+                            raise TypeError(
+                                f"got malformed key, expected [a-z0-9_]+: {prop!r}"
+                            )
+                        res[prop] = item
+                    else:
+                        res[self.trans[prop]] = self.items[prop](item)
                 except Exception as exc:
                     raise TypeError(f"{prop}: {str(exc)}") from None
         return res
@@ -296,7 +307,7 @@ def _resolve_check(name: str, spec, specs, cache=None) -> Callable[[Any], NoRetu
         check = CHECKS[spec["PrimitiveItemType"]]
         cache[key] = partial(CHECKS[spec["Type"]], check)
     elif "Properties" in spec:
-        cache[key] = ObjectChecker()
+        cache[key] = ObjectChecker(name == "AWS::CloudFormation::CustomResource")
         cache[key].items = {
             TRANS[prop]: _resolve_check(f"{com}.{prop}", sspec, specs, cache)
             for prop, sspec in spec["Properties"].items()

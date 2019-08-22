@@ -205,3 +205,17 @@ def test_none():
         job_flow_role="",
         configurations=[dict(configuration_properties=dict(x=None, y="y"))],
     )
+
+
+def test_custom():
+    spec = load("us-east-1")
+
+    resc = spec["aws"]["cloudformation"]["custom_resource"]
+
+    with pytest.raises(TypeError, match="missing required keys"):
+        resc("custom")
+
+    with pytest.raises(TypeError, match="got malformed key"):
+        resc("custom", service_token="dummy", Mixed_Case=42)
+
+    resc("custom", service_token="dummy", custom_prop_1=42, custom_prop_2="Foo")
