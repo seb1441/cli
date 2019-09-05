@@ -42,13 +42,13 @@ class AliasedGroup(click.Group):
 
         sub_commands = self.list_commands(ctx)
 
-        limit = formatter.width - 6 - max(len(cmd[0]) for cmd in sub_commands)
+        limit = formatter.width - 6 - max(len(sub_cmd[0]) for sub_cmd in sub_commands)
 
         for sub_command in sub_commands:
-            cmd = self.get_command(ctx, sub_command)
-            if cmd is None:
+            command = self.get_command(ctx, sub_command)
+            if command is None:
                 continue
-            if hasattr(cmd, 'hidden') and cmd.hidden:
+            if hasattr(command, 'hidden') and command.hidden:
                 continue
 
             inverted_aliases = dict()
@@ -59,7 +59,7 @@ class AliasedGroup(click.Group):
                 vals = inverted_aliases[sub_command]
                 sub_command = f'{sub_command} {{{", ".join(vals)}}}'
 
-            cmd_help = cmd.get_short_help_str(limit)
+            cmd_help = command.get_short_help_str(limit)
 
             rows.append((sub_command, cmd_help))
 
